@@ -1,0 +1,14 @@
+{
+  "name": "merck-connected-lab-poc",
+  "version": "0.0.1",
+  "author": "Micah Acinapura <macinapura@hugeinc.com>",
+  "dependencies": {
+    "@google-cloud/speech": "^0.9.3",
+    "apiai": "~4.0.2",
+    "aws-sdk": "~2.67.0",
+    "node-record-lpcm16": "~0.3.0",
+    "snowboy": "~1.2.0",
+    "speakable": "^0.4.0",
+    "uuid": "~3.1.0"
+  }
+}

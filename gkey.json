@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "clab-poc",
+  "private_key_id": "5b8ec18f142e38adfafb2be2c8791612e102ff16",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDb7t7nJsRs6GBG\nJ/OFqFttIJUD+X1yG/UW/h5jDfoNvib7rQsFODuI/G+wtRRlAe5a1HqP96LvpM+a\nJOzkWuSqu51CUogzLUrKa9ipsJqg3fBPRC+LsR+xKEkBYnJMCK/tt+vZLILB/jTM\nDDmgWTLkcrbWLyTrOdouh4KNifoZQdWg64OMRMb+PRiwrmOC4AKgG7dR9DAzO2Qe\njfgZqzlDhgL5h4jC6NFVO4aA4qabqHGqykOa2F8WMMflfKgztaoIM8qpst3t4kZt\n4uQ5c8wBu4jSHq+dng2Hf5Vt3+pHZf1M1Db2BbqBUc8y0cNW1MDMeVGImuiZgTHU\nw1BICdolAgMBAAECggEAHTB00QTqKPImZOlEfsa7a55ZaK+iIJTpUGXlrovaVhyY\nm+p5ffXaoPGv+SnvTQCWm+N7aMQbEeczzmd8MUqG8sn3sye0/+XQ+VCa7tqLizIp\nhLut+8JETITmO5LPTJwSjWBNowMvT4PnifVNaKSuBnfbIE4dfkKtXGOLxjE7ykId\neZnnVc8w7Obh3f1jD+yIHLNivJfTUZohBR7XYpxYSxTiQjFeu/SpSoSrFy6tIluy\nUWhKw0TYRvR9hvUHYoddKEuxzbupPpoUSUyoxxjQjL9Eecb3jaDSI9lETSssGRA6\nNNsPsMq4OlXqtsoeiXXKifk3UYBQjWPcCpeu+NXZAQKBgQD71hn+y4A27O/rnc6m\nfNLJlaXDg2xyHWzTrYIrAn72u7nyoHNVqcEZ+y8Ub3GfYDcYeCqhKeIj8YTh/quF\nE8tW+Y4GClm9wZygpFBjDXwP5BM7EQesuuEoui3z7w6LBCUBbijrzN5iAae/Cg4Y\nVg1rKxp7b5HAKeIckhqoQ0BxoQKBgQDfkb0QrnISkQrQRznjIQX7QZKEnPM7ISAD\niwJeNOg+x7BbuKBT58kz35zKuMyNeITuJnrH1TgN8QZqtx7i+c7nK1kfwszS4GqH\nfZwY3yl8Qt1sCdzBaUpKyzebxdLOczfwtm14X2oRTQlzcTOWpgAjbRs46NY9KjVh\nPZrG90hiBQKBgB4JvpYGnedvQXrAGur+zoGe6OO2JFREMDvbYUBSDuTNJXPMMZWR\nJug7brUoScwxxMCVbLhGb6PL5gaywrCf2Mwp/ge4alXY5x6+GpyF+jtHAAg2kszG\niZ66/kovRHPObb+K7TSa/heAjQqbX20FrpoOzRzWBPN/y2mO/8D8LI6hAoGAblYm\n0QzHD5K1m4ULdKTfptj9zqUHBa+bdSQtzwCdfh5fU2US+1XxXsCFSSdbDJbmRAKJ\npgX83CSP3irx+2L+Ueh628nv/EL1UFkVqNC6ULFPRfq4EFw+ZhtVHnPLTkhe21Wt\nQTMVzeQPPgIoS7kxaEp4nOWMljM2lP8qW/e+qWECgYEAw2Z2pQZWtlpKm+LLAYqV\n4uDzKB0wnK8XnSaniB19A2N/DHaWm9PUFOXoDUhBRWvLHFyVLVQHP0/s+ws9DdeB\n1jMCy22uwc7mKF+x/s6YiEe87B4jfgdkUTYX3g5UfCWJ+h3QnAizd3aKiuQ4/8o5\n8VDV30YhnH8JoA40z4cBBq4=\n-----END PRIVATE KEY-----\n",
+  "client_email": "clab-poc-service@clab-poc.iam.gserviceaccount.com",
+  "client_id": "109902147317639203022",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/clab-poc-service%40clab-poc.iam.gserviceaccount.com"
+}
