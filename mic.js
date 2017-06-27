@@ -1,8 +1,15 @@
 const snowboy = require('snowboy');
+const Stream = require('stream')
+const Speaker = require('speaker')
+const AWS = require('aws-sdk');
+const fs = require('fs')
+
 const Models = snowboy.Models;
 const Detector = snowboy.Detector;
 const models = new Models();
-var fs = require('fs')
+
+var polly = new AWS.Polly({'region': 'us-east-1'});
+
 var recorder = require('./record');
 var file = fs.createWriteStream('tempcommand.wav', { encoding: 'binary' });
 var detector = null;
@@ -11,7 +18,7 @@ var apiai = require('apiai');
 const uuidv4 = require('uuid/v4');
 const SESSION_ID = uuidv4(); 
 
-var apiAiApp = apiai("f0a0783e5c774224a05656014c4b2e2b");
+var apiAiApp = apiai("97a8b329b7f54fa7a7c786265d9a0027");
 var tempFileName = 'tempcommand.wav'
 
 var speech = require('@google-cloud/speech');
@@ -20,13 +27,19 @@ var speechClient = speech({
   keyFilename: './gkey.json'
 });
 
-
 //load hotword models
 models.add({
-  file: 'resources/okmerck.pmdl',
+  file: 'resources/smart_mirror.umdl',
   sensitivity: '0.5',
-  hotwords : 'ok merck'
+  hotwords : 'smart mirror'
 });
+
+// models.add({
+//   file: 'resources/Ravina.pmdl',
+//   sensitivity: '0.5',
+//   hotwords : 'Ravina'
+// });
+
 
 //DFA states
 var listenForHotword = function() {
@@ -37,11 +50,24 @@ var listenForHotword = function() {
   		audioGain: 2.0
 	});
 
+	detector.on('silence', function () {
+		console.log("silence");	
+	});
+
+	detector.on('sound', function (buffer) { // Buffer arguments contains sound that triggered the event, for example, it could be written to a wav stream 
+		console.log("not hotword");
+	});
+
+	detector.on('error', function () {
+	  console.log('error');
+	});
+
 	//add detection event
 	detector.on('hotword', function (index, hotword, buffer) { // Buffer arguments contains sound that triggered the event, for example, it could be written to a wav stream 
   		console.log('hotword', index, hotword);
 		voiceTriggered = true;
 		recorder.stop();
+		console.log("Recorder stop");
 		setTimeout(function(){
 			startRecordingCommand();
 		},50);
@@ -56,8 +82,10 @@ var listenForHotword = function() {
 
 var startRecordingCommand = function() {
 	file = fs.createWriteStream(tempFileName, { encoding: 'binary' });
+	console.log("Recorder starting for command");
 	recorder.start({
   		sampleRate : 44100,
+  		 threshold: 0.5,
   		verbose : false
 	}, function(){
 		console.log("command recorded");
@@ -66,6 +94,11 @@ var startRecordingCommand = function() {
 		},100);
 		sendAudioForProcessing()
 	}).pipe(file)
+
+	// Stop recording after three seconds 
+	setTimeout(function () {
+	  recorder.stop()
+	}, 3000)
 };
 
 var sendAudioForProcessing = function() {
@@ -79,7 +112,7 @@ var sendAudioForProcessing = function() {
   		if (err) {
   			console.log(err);
   		} else {
-  			console.log("\"",transcript,"\"");
+  			console.log("The spoken text is " + "\"",transcript,"\"");
 	  		sendTextForProcessing(transcript);
   		}
 	});
@@ -90,12 +123,43 @@ var sendTextForProcessing = function(text) {
     	sessionId: SESSION_ID
 	});
 	request.on('response', function(response) {
-	    console.log(response);
+	    console.log("Response from API.ai -- " + response.result.fulfillment.speech);
+	    convertTextToVoice(response.result.fulfillment.speech);
 	});
 	request.on('error', function(error) {
     	console.log(error);
 	});
 	request.end();
 };
+
+
+var convertTextToVoice = function(text){
+	let params = {
+	  OutputFormat: "pcm", 
+	  Text: text, 
+	  VoiceId: "Raveena"
+	 };
+  
+   console.log("Feeding to Polly");
+    polly.synthesizeSpeech(params, (err, data) => {
+    if (err) {
+       console.log("Error during polly");
+        console.log(err.code)
+    } else if (data) {
+        if (data.AudioStream instanceof Buffer) {
+            // Initiate the source
+            var bufferStream = new Stream.PassThrough()
+            // convert AudioStream into a readable stream
+            bufferStream.end(data.AudioStream)
+            // Pipe into Player
+            bufferStream.pipe(new Speaker({
+			  channels: 1,
+			  bitDepth: 16,
+			  sampleRate: 16000
+			}))
+        }
+    }
+})
+}
 
 listenForHotword();

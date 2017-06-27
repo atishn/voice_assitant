@@ -1,3 +1,3 @@
---- MERCK CONNECTED LAB ---
+--- Voice CONNECTED --
 
 * 'Amazon echo but for a lab setting' 
