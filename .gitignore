@@ -6,6 +6,8 @@ yarn-debug.log*
 yarn-error.log*
 gkey.json
 
+tempcommand.wav
+
 # Runtime data
 pids
 *.pid

@@ -110,7 +110,7 @@ var sendAudioForProcessing = function() {
 	}, function(err, transcript) {
   		// transcript = 'how old is the Brooklyn Bridge' 
   		if (err) {
-  			console.log(err);
+  			console.log("Error during google speech "+ err);
   		} else {
   			console.log("The spoken text is " + "\"",transcript,"\"");
 	  		sendTextForProcessing(transcript);
@@ -119,6 +119,7 @@ var sendAudioForProcessing = function() {
 };
 
 var sendTextForProcessing = function(text) {
+	if(!isEmptyOrSpaces(text)){
 	var request = apiAiApp.textRequest(text, {
     	sessionId: SESSION_ID
 	});
@@ -127,9 +128,11 @@ var sendTextForProcessing = function(text) {
 	    convertTextToVoice(response.result.fulfillment.speech);
 	});
 	request.on('error', function(error) {
-    	console.log(error);
+    	console.log("Error during API.ai" + error);
 	});
-	request.end();
+	request.end();	
+	}
+	
 };
 
 
@@ -160,6 +163,10 @@ var convertTextToVoice = function(text){
         }
     }
 })
+}
+
+var isEmptyOrSpaces = function(str){
+    return str === null || str.match(/^ *$/) !== null;
 }
 
 listenForHotword();
