@@ -1,7 +1,11 @@
 {
-  "name": "merck-connected-lab-poc",
+  "name": "voice-assisted",
   "version": "0.0.1",
-  "author": "Micah Acinapura <macinapura@hugeinc.com>",
+  "author": "Atish Narlawar <anarlawar@hugeinc.com>",
+  "scripts": {
+    "watch": "./node_modules/.bin/nodemon --harmony-async-await mic.js",
+    "start": "node --harmony-async-await mic.js"
+  },
   "dependencies": {
     "@google-cloud/speech": "^0.9.3",
     "apiai": "~4.0.2",
@@ -13,5 +17,8 @@
     "speakable": "^0.4.0",
     "speaker": "^0.3.0",
     "uuid": "~3.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }
