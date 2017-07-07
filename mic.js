@@ -41,11 +41,11 @@ models.add({
   hotwords: 'smart mirror'
 });
 
-//models.add({
-//  file: 'resources/Ravina.pmdl',
-//  sensitivity: '0.5',
-//  hotwords: 'Ravina'
-//});
+models.add({
+  file: 'resources/ramu.pmdl',
+  sensitivity: '0.5',
+  hotwords: 'Ravina'
+});
 
 
 //DFA states
