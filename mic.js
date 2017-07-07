@@ -5,6 +5,9 @@ const AWS = require('aws-sdk');
 const fs = require('fs')
 const synthesize = require('./lib/synthesize')
 const say = require('./lib/say')
+const wolfram = require('./lib/wolfram')
+const config = require('./resources/config')
+
 
 const Models = snowboy.Models;
 const Detector = snowboy.Detector;
@@ -38,11 +41,11 @@ models.add({
   hotwords: 'smart mirror'
 });
 
-models.add({
-  file: 'resources/Ravina.pmdl',
-  sensitivity: '0.5',
-  hotwords: 'Ravina'
-});
+//models.add({
+//  file: 'resources/Ravina.pmdl',
+//  sensitivity: '0.5',
+//  hotwords: 'Ravina'
+//});
 
 
 //DFA states
@@ -131,9 +134,17 @@ var sendTextForProcessing = function (text) {
       sessionId: SESSION_ID
     });
     request.on('response', function (response) {
-      if (response && response.result && response.result.fulfillment) {
-        console.log("Response from API.ai -- " + response.result.fulfillment.speech);
-        convertTextToVoice(response.result.fulfillment.speech);
+      if (response && response.result) {
+
+        if (response.result.action == "input.unknown") {
+
+          wolfram(config.appId, text, convertTextToVoice)
+
+        } else if (response.result.fulfillment) {
+          console.log("Response from API.ai -- " + response.result.fulfillment.speech);
+          convertTextToVoice(response.result.fulfillment.speech);
+        }
+
       }
     });
     request.on('error', function (error) {
@@ -145,67 +156,24 @@ var sendTextForProcessing = function (text) {
 
 
 var convertTextToVoice = function (text) {
-  synthesize(text).
-      then(data => {
-        console.log(`Synthesized ${data.requestCharacters} characters`)
-        return say(data.audioStream)
-      }).
-      then(() => {
-        isBusy = false
-        return res.sendStatus(200)
-      }).
-      catch(err => {
-        isBusy = false
-        console.error(err)
-        return res.sendStatus(500)
-      })
+  if (!isBusy) {
+    isBusy = true;
+    synthesize(text).
+        then(data => {
+          console.log(`Synthesized ${data.requestCharacters} characters`)
+          return say(data.audioStream)
+        }).
+        then(() => {
+          isBusy = false
+          //return res.sendStatus(200)
+        }).
+        catch(err => {
+          isBusy = false
+          console.error(err)
+          //return res.sendStatus(500)
+        })
+  }
 }
-//var convertTextToVoice = function(text){
-//	let params = {
-//	  OutputFormat: "pcm",
-//	  Text: text,
-//	  VoiceId: "Raveena"
-//	 };
-//
-//   console.log("Feeding to Polly");
-//    polly.synthesizeSpeech(params, (err, data) => {
-//    if (err) {
-//       console.log("Error during polly");
-//        console.log(err.code)
-//    } else if (data) {
-//
-//		// var AudioStream = new Stream.Readable()
-//		// AudioStream._read = function () {}
-//		// AudioStream.pipe(new Speaker({
-//		// 	  channels: 1,
-//		// 	  bitDepth: 16,
-//		// 	  sampleRate: 16000
-//		// 	}))
-//
-//		// if (data.AudioStream instanceof Buffer) {
-//		//   AudioStream.push(data.AudioStream)
-//		// }
-//  //              console.log("Finished the Polly");
-//
-//
-//        if (data.AudioStream instanceof Buffer) {
-//            // Initiate the source
-//            var bufferStream = new Stream.PassThrough()
-//            // convert AudioStream into a readable stream
-//            bufferStream.end(data.AudioStream)
-//            // Pipe into Player
-//
-//            bufferStream.pipe(new Speaker({
-//			  channels: 1,
-//			  bitDepth: 16,
-//			  sampleRate: 16000
-//			}))
-//               console.log("Finished the Polly");
-//        }
-//    }
-//})
-//}
-
 var isEmptyOrSpaces = function (str) {
   return str === null || str.match(/^ *$/) !== null;
 }

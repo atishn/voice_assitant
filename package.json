@@ -13,6 +13,7 @@
     "child_process": "^1.0.2",
     "node-record-lpcm16": "~0.3.0",
     "node-wit": "^4.2.0",
+    "q": "^1.5.0",
     "snowboy": "~1.2.0",
     "speakable": "^0.4.0",
     "speaker": "^0.3.0",
