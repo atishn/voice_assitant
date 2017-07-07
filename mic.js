@@ -31,7 +31,7 @@ var tempFileName = 'tempcommand.wav'
 var speech = require('@google-cloud/speech');
 var speechClient = speech({
   projectId: 'clab-poc',
-  keyFilename: './gkey.json'
+  keyFilename: './resources/gkey.json'
 });
 
 //load hotword models

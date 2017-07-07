@@ -5,6 +5,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 gkey.json
+config.json
 .idea
 tempcommand.wav
 
