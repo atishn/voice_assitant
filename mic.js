@@ -42,9 +42,9 @@ models.add({
 });
 
 models.add({
-  file: 'resources/ramu.pmdl',
+  file: 'resources/jarvis.pmdl',
   sensitivity: '0.5',
-  hotwords: 'Ravina'
+  hotwords: 'Jarvis'
 });
 
 
