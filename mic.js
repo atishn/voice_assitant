@@ -41,11 +41,11 @@ models.add({
   hotwords: 'smart mirror'
 });
 
-models.add({
-  file: 'resources/jarvis.pmdl',
-  sensitivity: '0.5',
-  hotwords: 'Jarvis'
-});
+//models.add({
+//  file: 'resources/jarvis.pmdl',
+//  sensitivity: '0.5',
+//  hotwords: 'Jarvis'
+//});
 
 
 //DFA states
@@ -97,18 +97,22 @@ var startRecordingCommand = function () {
     verbose: false
   }, function () {
     console.log("command recorded");
+    recorder.stop();
+    file.end();
+
     setTimeout(function () {
       listenForHotword();
-    }, 100);
+    }, 10000);
+
     sendAudioForProcessing()
   }).pipe(file)
 
-  // Stop recording after three seconds
-  setTimeout(function () {
-    console.log("Stop recording after three seconds");
-    //recorder.stop();
-    // file.end();
-  }, 3000)
+  //// Stop recording after three seconds
+  //setTimeout(function () {
+  //  console.log("Stop recording after three seconds");
+  //  recorder.stop();
+  //  file.end();
+  //}, 3000)
 };
 
 var sendAudioForProcessing = function () {
