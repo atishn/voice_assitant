@@ -7,6 +7,8 @@ const synthesize = require('./lib/synthesize')
 const say = require('./lib/say')
 const wolfram = require('./lib/wolfram')
 const config = require('./resources/config')
+const play = require('play')
+
 
 
 const Models = snowboy.Models;
@@ -72,6 +74,7 @@ var listenForHotword = function () {
 
   //add detection event
   detector.on('hotword', function (index, hotword, buffer) { // Buffer arguments contains sound that triggered the event, for example, it could be written to a wav stream
+    play.sound('./resources/ding.wav');
     console.log('hotword', index, hotword);
     voiceTriggered = true;
     recorder.stop();
@@ -102,17 +105,11 @@ var startRecordingCommand = function () {
 
     setTimeout(function () {
       listenForHotword();
-    }, 10000);
+    }, 3000);
 
     sendAudioForProcessing()
   }).pipe(file)
 
-  //// Stop recording after three seconds
-  //setTimeout(function () {
-  //  console.log("Stop recording after three seconds");
-  //  recorder.stop();
-  //  file.end();
-  //}, 3000)
 };
 
 var sendAudioForProcessing = function () {
@@ -122,7 +119,6 @@ var sendAudioForProcessing = function () {
     sampleRateHertz: 44100,
     languageCode: "en_US"
   }, function (err, transcript) {
-    // transcript = 'how old is the Brooklyn Bridge'
     if (err) {
       console.log("Error during google speech " + err);
     } else {
