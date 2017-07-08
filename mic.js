@@ -8,8 +8,7 @@ const say = require('./lib/say')
 const wolfram = require('./lib/wolfram')
 const config = require('./resources/config')
 const play = require('play')
-
-
+const startchrome = require('./lib/startchrome');
 
 const Models = snowboy.Models;
 const Detector = snowboy.Detector;
@@ -137,9 +136,9 @@ var sendTextForProcessing = function (text) {
       if (response && response.result) {
 
         if (response.result.action == "input.unknown") {
-
           wolfram(config.appId, text, convertTextToVoice)
-
+        } else if (response.result.action == "input.devices.tv") {
+          startchrome()
         } else if (response.result.fulfillment) {
           console.log("Response from API.ai -- " + response.result.fulfillment.speech);
           convertTextToVoice(response.result.fulfillment.speech);

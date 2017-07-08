@@ -1,24 +1,28 @@
 const config = require('./lib/config');
 var wolfram = require('./lib/wolfram');
+const startchrome = require('./lib/startchrome');
+
 
 
 //DFA states
 var queryWalfram = function () {
 
-  wolfram("VY9PYK-QW32V6KT55", "India Prime Minister").
-      then(data => {
-        console.log(`Synthesized` + data.result)
-      }).
-      then(() => {
-        isBusy = false
-        return res.sendStatus(200)
-      }).
-      catch(err => {
-        isBusy = false
-        console.error(err)
-        return res.sendStatus(500)
-      })
+  startchrome();
 
+  //wolfram("VY9PYK-QW32V6KT55", "India Prime Minister").
+  //    then(data => {
+  //      console.log(`Synthesized` + data.result)
+  //    }).
+  //    then(() => {
+  //      isBusy = false
+  //      return res.sendStatus(200)
+  //    }).
+  //    catch(err => {
+  //      isBusy = false
+  //      console.error(err)
+  //      return res.sendStatus(500)
+  //    })
+  //
 
   //response = wolfram.init(config.getAppId()).query("India Prime minister");
   //console.log("Result:" + response)

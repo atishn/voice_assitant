@@ -8,6 +8,8 @@ gkey.json
 config.json
 .idea
 tempcommand.wav
+*.mp4
+*.part
 
 # Runtime data
 pids
