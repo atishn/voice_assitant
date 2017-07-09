@@ -8,7 +8,6 @@ const say = require('./lib/say')
 const wolfram = require('./lib/wolfram')
 const config = require('./resources/config')
 const play = require('play')
-const startchrome = require('./lib/startchrome');
 const youtubevideo = require('./lib/youtube-video.js')
 const speech = require('@google-cloud/speech');
 var recorder = require('./lib/record');
@@ -144,8 +143,10 @@ var sendTextForProcessing = function (text) {
           youtubevideo(response.result.parameters.keyword, config.youtubeKey)
         } else if (response.result.fulfillment) {
           console.log("Response from API.ai -- " + response.result.fulfillment.speech);
-          convertTextToVoice(response.result.fulfillment.speech);
+          //convertTextToVoice(response.result.fulfillment.speech);
+          startchrome();
         }
+
       }
     });
     request.on('error', function (error) {
