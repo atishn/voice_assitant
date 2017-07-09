@@ -9,6 +9,11 @@ const wolfram = require('./lib/wolfram')
 const config = require('./resources/config')
 const play = require('play')
 const startchrome = require('./lib/startchrome');
+const youtubevideo = require('./lib/youtube-video.js')
+const speech = require('@google-cloud/speech');
+var recorder = require('./lib/record');
+const util = require('./lib/util');
+
 
 const Models = snowboy.Models;
 const Detector = snowboy.Detector;
@@ -16,7 +21,6 @@ const models = new Models();
 
 var polly = new AWS.Polly({'region': 'us-east-1'});
 
-var recorder = require('./lib/record');
 var file = fs.createWriteStream('tempcommand.wav', {encoding: 'binary'});
 var detector = null;
 var apiai = require('apiai');
@@ -29,7 +33,6 @@ let isBusy = false
 var apiAiApp = apiai("97a8b329b7f54fa7a7c786265d9a0027");
 var tempFileName = 'tempcommand.wav'
 
-var speech = require('@google-cloud/speech');
 var speechClient = speech({
   projectId: 'clab-poc',
   keyFilename: './resources/gkey.json'
@@ -128,22 +131,21 @@ var sendAudioForProcessing = function () {
 };
 
 var sendTextForProcessing = function (text) {
-  if (!isEmptyOrSpaces(text)) {
+  if (!util.isEmptyOrSpaces(text)) {
     var request = apiAiApp.textRequest(text, {
       sessionId: SESSION_ID
     });
     request.on('response', function (response) {
       if (response && response.result) {
-
         if (response.result.action == "input.unknown") {
-          wolfram(config.appId, text, convertTextToVoice)
+          wolfram(config.wolframappId, text, convertTextToVoice)
         } else if (response.result.action == "input.devices.tv") {
-          startchrome()
+          console.log("Starting youtube")
+          youtubevideo(response.result.parameters.keyword, config.youtubeKey)
         } else if (response.result.fulfillment) {
           console.log("Response from API.ai -- " + response.result.fulfillment.speech);
           convertTextToVoice(response.result.fulfillment.speech);
         }
-
       }
     });
     request.on('error', function (error) {
@@ -173,8 +175,4 @@ var convertTextToVoice = function (text) {
         })
   }
 }
-var isEmptyOrSpaces = function (str) {
-  return str === null || str.match(/^ *$/) !== null;
-}
-
 listenForHotword();
