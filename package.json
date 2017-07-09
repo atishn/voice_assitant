@@ -10,16 +10,18 @@
     "@google-cloud/speech": "^0.9.3",
     "apiai": "~4.0.2",
     "aws-sdk": "^2.67.0",
-    "castnow": "^0.4.18",
     "child_process": "^1.0.2",
+    "mdns": "^2.3.3",
     "node-record-lpcm16": "~0.3.0",
     "node-wit": "^4.2.0",
+    "npr-api": "^2.0.1",
     "play": "^0.5.0",
     "q": "^1.5.0",
     "snowboy": "~1.2.0",
     "speakable": "^0.4.0",
     "speaker": "^0.3.0",
-    "uuid": "~3.1.0"
+    "uuid": "~3.1.0",
+    "youtube-castv2-client": "git@github.com:irfanhabib/youtube-castv2-client.git"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"
