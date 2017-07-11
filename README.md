@@ -5,8 +5,8 @@
 npm install
 
 Make sure to setup
-gkey.json
-config.json with Wolfram API Key and YouTubeAPI.
+Rename gkey-new.json to gkey.json and updated the values.
+Rename config-new.json to config.json and update with Wolfram API Key and YouTubeAPI.
 
 npm start
 
