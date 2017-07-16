@@ -105,7 +105,9 @@ var startRecordingCommand = function () {
     file.end();
 
     setTimeout(function () {
+      recorder.stop();
       listenForHotword();
+      file.end();
     }, 3000);
 
     sendAudioForProcessing()
@@ -143,16 +145,16 @@ var sendTextForProcessing = function (text) {
           youtubevideo(response.result.parameters.keyword, config.youtubeKey)
         } else if (response.result.fulfillment) {
           console.log("Response from API.ai -- " + response.result.fulfillment.speech);
-          //convertTextToVoice(response.result.fulfillment.speech);
-          startchrome();
+          convertTextToVoice(response.result.fulfillment.speech);
         }
-
       }
     });
     request.on('error', function (error) {
       console.log("Error during API.ai" + error);
     });
     request.end();
+  } else{
+    play.sound('./resources/hammer.wav');
   }
 };
 
